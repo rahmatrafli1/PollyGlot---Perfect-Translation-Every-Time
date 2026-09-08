@@ -31,7 +31,7 @@ A text translation app powered by the OpenAI API with a responsive design (mobil
    OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxx
    AI_MODEL=gpt-5-nano
    PORT=3002
-   BASE_URL=pollyglot.local
+   BASE_URL=your-base-url
    URL=http://localhost
    ```
 
