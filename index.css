@@ -4,73 +4,74 @@
   padding: 0;
 }
 
+html,
 body {
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #2d3a52 100%);
-  background-image:
-    radial-gradient(
-      circle at 15% 20%,
-      rgba(255, 255, 255, 0.08) 1px,
-      transparent 1px
-    ),
-    radial-gradient(
-      circle at 85% 60%,
-      rgba(255, 255, 255, 0.08) 1px,
-      transparent 1px
-    ),
-    linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #2d3a52 100%);
-  background-size:
-    40px 40px,
-    40px 40px,
-    cover;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px;
+  height: auto;
+  min-height: 100%;
 }
 
-.app-container {
-  width: 100%;
-  max-width: 480px;
+body {
+  font-family: "Poppins", sans-serif;
+  background: #f4f6f8;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
 }
 
-/* Header */
+/* ===== Header banner ===== */
 .app-header {
+  width: 100%;
+  background: #0d1b2a url("assets/worldmap.png") center / cover no-repeat;
+  padding: 30px 20px;
+}
+
+.app-header-inner {
+  max-width: 600px;
+  margin: 0 auto;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 10px;
-  color: #fff;
-  text-align: center;
 }
 
 .app-header h1 {
-  font-size: 28px;
-  color: #7ee8fa;
+  font-size: 20px;
+  color: #4caf50;
   letter-spacing: 1px;
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 .logo-icon {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 
 .tagline {
-  font-size: 12px;
-  color: #cfe8ff;
+  font-size: 11px;
+  color: #ffffff;
   letter-spacing: 0.5px;
 }
 
-/* Card */
+/* ===== Container & Card ===== */
+.app-container {
+  width: 100%;
+  max-width: 480px;
+  margin-top: 20px;
+  padding: 0 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1;
+}
+
 .card {
   background: #fff;
-  border-radius: 24px;
+  border: 2px solid #0d1b2a;
+  border-radius: 20px;
   padding: 28px 24px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .view {
@@ -87,17 +88,19 @@ body {
   color: #1565c0;
   font-weight: 700;
   font-size: 14px;
+  text-align: center;
 }
 
 textarea {
   width: 100%;
   min-height: 90px;
+  max-height: 140px;
   padding: 14px;
   border-radius: 12px;
   border: 1px solid #d7dde3;
   background: #f4f6f8;
   font-size: 15px;
-  resize: vertical;
+  resize: none;
   font-family: inherit;
 }
 
@@ -116,9 +119,7 @@ textarea:focus {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: #f4f6f8;
+  padding: 4px 4px;
   cursor: pointer;
   font-weight: 600;
   color: #333;
@@ -152,8 +153,12 @@ textarea:focus {
   flex: 1;
 }
 
-.flag {
-  font-size: 20px;
+.flag img {
+  width: 28px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 3px;
+  display: block;
 }
 
 /* Buttons */
@@ -226,26 +231,39 @@ textarea:focus {
     max-width: 560px;
   }
   .card {
-    padding: 36px 32px;
+    padding: 32px 32px;
   }
   .app-header h1 {
-    font-size: 32px;
+    font-size: 24px;
+  }
+  .logo-icon {
+    width: 48px;
+    height: 48px;
   }
 }
 
 /* ===== DESKTOP ===== */
 @media (min-width: 1024px) {
+  .app-header {
+    padding: 36px 20px;
+  }
   .app-container {
     max-width: 620px;
-  }
-  body {
-    padding: 60px 20px;
+    margin-top: 30px;
   }
   .card {
-    padding: 44px 40px;
+    padding: 40px 40px;
   }
   textarea {
-    min-height: 110px;
+    min-height: 100px;
+    max-height: 150px;
+  }
+  .app-header h1 {
+    font-size: 28px;
+  }
+  .logo-icon {
+    width: 52px;
+    height: 52px;
   }
 }
 
@@ -255,6 +273,10 @@ textarea:focus {
     padding: 20px 16px;
   }
   .app-header h1 {
-    font-size: 22px;
+    font-size: 18px;
+  }
+  .logo-icon {
+    width: 34px;
+    height: 34px;
   }
 }
