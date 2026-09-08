@@ -1,14 +1,14 @@
 # 🦜 PollyGlot - Perfect Translation Every Time
 
-Aplikasi translasi teks menggunakan OpenAI API dengan tampilan responsive (mobile, tablet, desktop).
+A text translation app powered by the OpenAI API with a responsive design (mobile, tablet, desktop).
 
-## Fitur
+## Features
 
-- Translate teks ke French 🇫🇷, Spanish 🇪🇸, atau Japanese 🇯🇵
-- Menggunakan OpenAI GPT model
+- Translate text into French 🇫🇷, Spanish 🇪🇸, or Japanese 🇯🇵
+- Uses OpenAI GPT model
 - Error handling
-- Tampilan responsive (mobile, tablet, desktop)
-- API key disembunyikan di server (tidak exposed ke client)
+- Responsive layout (mobile, tablet, desktop)
+- API key hidden on the server (not exposed to the client)
 
 ## Setup
 
@@ -18,27 +18,27 @@ Aplikasi translasi teks menggunakan OpenAI API dengan tampilan responsive (mobil
    npm install
    ```
 
-2. Copy `.env.example` menjadi `.env`:
+2. Copy `.env.example` to `.env`:
 
    ```bash
    copy .env.example .env
    ```
 
-3. Isi `OPENAI_API_KEY` di file `.env` dengan API key OpenAI Anda:
+3. Fill in your `OPENAI_API_KEY` in the `.env` file:
 
    ```
    OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxx
    ```
 
-4. Jalankan server:
+4. Run the server:
 
    ```bash
    npm start
    ```
 
-5. Buka browser ke `http://localhost:3002`
+5. Open your browser at `http://localhost:3002`
 
-## Struktur Project
+## Project Structure
 
 ```
 PollyGlot/
@@ -52,20 +52,20 @@ PollyGlot/
 └── .gitignore
 ```
 
-### Penjelasan File
+### File Overview
 
-| File/Folder    | Keterangan                                              |
+| File/Folder    | Description                                             |
 | -------------- | ------------------------------------------------------- |
-| `index.html`   | Struktur halaman (input view & result view)             |
-| `index.css`    | Styling responsive (mobile, tablet, desktop)            |
-| `index.js`     | Logic frontend (fetch API, switch view, error handling) |
-| `assets/`      | Menyimpan gambar/logo yang digunakan (opsional)         |
-| `server.js`    | Backend Express, menangani request ke OpenAI API        |
-| `.env.example` | Template environment variable                           |
-| `package.json` | Daftar dependencies & script npm                        |
+| `index.html`   | Page structure (input view & result view)               |
+| `index.css`    | Responsive styling (mobile, tablet, desktop)            |
+| `index.js`     | Frontend logic (fetch API, switch view, error handling) |
+| `assets/`      | Stores images/logos used in the app (optional)          |
+| `server.js`    | Express backend, handles requests to the OpenAI API     |
+| `.env.example` | Environment variable template                           |
+| `package.json` | List of dependencies & npm scripts                      |
 
-## Teknologi
+## Technology
 
-- Node.js + Express (backend, menyembunyikan API key)
+- Node.js + Express (backend, keeps the API key hidden)
 - OpenAI API (model: `gpt-5-nano`)
-- Vanilla HTML/CSS/JS (frontend, responsive)
+- Vanilla HTML/CSS/JS (responsive frontend)
