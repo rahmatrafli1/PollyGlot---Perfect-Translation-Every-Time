@@ -1,0 +1,22 @@
+{
+  "name": "Scrim-s05rqc4",
+  "description": "https://scrimba.com/fullstack-path-c0fullstack/~0xrr",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev:server": "nodemon server.js",
+    "dev:client": "vite",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "openai": "^7.10.0"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "nodemon": "^3.1.14",
+    "vite": "^8.2.2"
+  }
+}
