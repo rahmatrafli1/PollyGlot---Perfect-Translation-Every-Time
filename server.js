@@ -13,7 +13,19 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-app.use(cors());
+const allowedOrigins = [
+  `https://${BASE_URL}`,
+  `${URL_PROTOCOL}:5173`,
+  `${URL_PROTOCOL}:${PORT}`,
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
 app.use(express.static(__dirname));
 
