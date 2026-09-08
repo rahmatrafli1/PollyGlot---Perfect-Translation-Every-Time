@@ -6,7 +6,8 @@
     "start": "node server.js",
     "dev:server": "nodemon server.js",
     "dev:client": "vite",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "vite build"
   },
   "dependencies": {
     "cors": "^2.8.6",
