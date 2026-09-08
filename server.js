@@ -6,6 +6,8 @@ const OpenAI = require("openai");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const BASE_URL = process.env.BASE_URL;
+const URL_PROTOCOL = process.env.URL;
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -69,5 +71,6 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🦜 PollyGlot server running on http://localhost:${PORT}`);
+  console.log(`🦜 PollyGlot server running on ${URL_PROTOCOL}:${PORT}`);
+  console.log(`Base URL: ${BASE_URL}`);
 });
