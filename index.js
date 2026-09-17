@@ -36,37 +36,65 @@ function switchView(showResult) {
 
 translateBtn.addEventListener("click", async () => {
   hideError();
+
   const text = sourceText.value.trim();
-  const language = document.querySelector(
+  const selectedLanguage = document.querySelector(
     'input[name="language"]:checked',
-  ).value;
+  );
 
   if (!text) {
     showError("Please enter some text to translate.");
     return;
   }
 
+  if (!selectedLanguage) {
+    showError("Please select a language.");
+    return;
+  }
+
   setLoading(true);
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
 
   try {
     const response = await fetch("/api/translate", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, language }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        text,
+        language: selectedLanguage.value,
+      }),
+      signal: controller.signal,
     });
 
-    const data = await response.json();
+    const contentType = response.headers.get("content-type") || "";
+    const data = contentType.includes("application/json")
+      ? await response.json()
+      : {};
 
     if (!response.ok) {
-      throw new Error(data.error || "Something went wrong.");
+      throw new Error(data.error || `Server error (${response.status})`);
+    }
+
+    if (!data.translation) {
+      throw new Error("Translation result is empty.");
     }
 
     originalTextDisplay.textContent = text;
     translatedTextDisplay.textContent = data.translation;
     switchView(true);
   } catch (err) {
-    showError(err.message || "Failed to translate. Please try again.");
+    if (err.name === "AbortError") {
+      showError("Request timed out. Please try again.");
+    } else {
+      showError(err.message || "Failed to translate. Please try again.");
+    }
   } finally {
+    clearTimeout(timeout);
     setLoading(false);
   }
 });
