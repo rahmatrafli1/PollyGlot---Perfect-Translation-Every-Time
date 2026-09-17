@@ -9,12 +9,15 @@ const translatedTextDisplay = document.getElementById("translatedTextDisplay");
 const btnText = translateBtn.querySelector(".btn-text");
 const spinner = translateBtn.querySelector(".spinner");
 
+let activeRequest = null;
+
 function showError(message) {
   errorMsg.textContent = message;
   errorMsg.style.display = "block";
 }
 
 function hideError() {
+  errorMsg.textContent = "";
   errorMsg.style.display = "none";
 }
 
@@ -25,13 +28,8 @@ function setLoading(isLoading) {
 }
 
 function switchView(showResult) {
-  if (showResult) {
-    inputView.classList.remove("active-view");
-    resultView.classList.add("active-view");
-  } else {
-    resultView.classList.remove("active-view");
-    inputView.classList.add("active-view");
-  }
+  inputView.classList.toggle("active-view", !showResult);
+  resultView.classList.toggle("active-view", showResult);
 }
 
 translateBtn.addEventListener("click", async () => {
@@ -52,13 +50,22 @@ translateBtn.addEventListener("click", async () => {
     return;
   }
 
-  setLoading(true);
+  // Batalkan request sebelumnya jika masih berjalan
+  if (activeRequest) {
+    activeRequest.abort();
+  }
 
   const controller = new AbortController();
+  activeRequest = controller;
   const timeout = setTimeout(() => controller.abort(), 30000);
 
+  setLoading(true);
+
   try {
-    const response = await fetch("/api/translate", {
+    // URL relatif agar tetap menggunakan folder PollyGlot
+    const apiUrl = new URL("api/translate", document.baseURI);
+
+    const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,36 +78,53 @@ translateBtn.addEventListener("click", async () => {
       signal: controller.signal,
     });
 
-    const contentType = response.headers.get("content-type") || "";
-    const data = contentType.includes("application/json")
-      ? await response.json()
-      : {};
+    const rawResponse = await response.text();
+    let data = {};
+
+    try {
+      data = rawResponse ? JSON.parse(rawResponse) : {};
+    } catch {
+      throw new Error("Server mengirim respons yang tidak valid.");
+    }
 
     if (!response.ok) {
       throw new Error(data.error || `Server error (${response.status})`);
     }
 
-    if (!data.translation) {
-      throw new Error("Translation result is empty.");
+    const translation =
+      data.translation || data.translatedText || data.result || "";
+
+    if (!translation.trim()) {
+      throw new Error("Hasil terjemahan kosong.");
     }
 
     originalTextDisplay.textContent = text;
-    translatedTextDisplay.textContent = data.translation;
+    translatedTextDisplay.textContent = translation;
     switchView(true);
-  } catch (err) {
-    if (err.name === "AbortError") {
-      showError("Request timed out. Please try again.");
-    } else {
-      showError(err.message || "Failed to translate. Please try again.");
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      showError(error.message || "Translation failed. Please try again.");
     }
   } finally {
     clearTimeout(timeout);
-    setLoading(false);
+
+    if (activeRequest === controller) {
+      activeRequest = null;
+      setLoading(false);
+    }
   }
 });
 
 startOverBtn.addEventListener("click", () => {
+  if (activeRequest) {
+    activeRequest.abort();
+    activeRequest = null;
+  }
+
   sourceText.value = "";
+  originalTextDisplay.textContent = "";
+  translatedTextDisplay.textContent = "";
   hideError();
+  setLoading(false);
   switchView(false);
 });
