@@ -84,7 +84,7 @@ translateBtn.addEventListener("click", async () => {
     try {
       data = rawResponse ? JSON.parse(rawResponse) : {};
     } catch {
-      throw new Error("Server mengirim respons yang tidak valid.");
+      throw new Error("The server sent an invalid response.");
     }
 
     if (!response.ok) {
@@ -95,7 +95,7 @@ translateBtn.addEventListener("click", async () => {
       data.translation || data.translatedText || data.result || "";
 
     if (!translation.trim()) {
-      throw new Error("Hasil terjemahan kosong.");
+      throw new Error("The translation result is empty.");
     }
 
     originalTextDisplay.textContent = text;
